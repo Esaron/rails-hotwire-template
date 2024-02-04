@@ -1,0 +1,29 @@
+version: '3'
+services:
+  database:
+    image: "postgres"
+    ports:
+      - "54329:5432"
+    environment:
+      POSTGRES_DB: rails_hotwire_template_development
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    volumes:
+      - data:/var/lib/postgresql/data/
+    restart: always
+
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+    volumes:
+      - .:/var/app
+      - /var/app/node_modules
+      - logs:/var/log
+
+volumes:
+  logs: {}
+  data: {}
+
